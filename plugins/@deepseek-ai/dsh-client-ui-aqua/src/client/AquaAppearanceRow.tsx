@@ -1,0 +1,173 @@
+/**
+ * Aqua row registered into the General settings section
+ * (`settings.general.item`, right under Appearance): every glass knob — mode
+ * (mica / compatibility), blur/frost (mica mode only), fluid color,
+ * background brightness, the backdrop source picker, and the wallpaper
+ * picker with its two knobs. Every
+ * write goes straight through to the layer, so the skin moves live. The
+ * controls follow the Appearance cubes directly (no row title of their own),
+ * and the whole row renders nothing while the master switch in the Plugins
+ * section is off.
+ */
+import { useRef } from 'react'
+import { IconCheckOutline16 } from '@deepseek-ai/dsh-client-ui-primitives'
+import type { PropsLocale, PropsRuntime, PropsStore } from '@deepseek-ai/dsh-client-ui-slots'
+// Type-only: pulls the `settings.general.item` SlotMap merge.
+import type {} from '@deepseek-ai/dsh-client-ui-settings/client'
+import { fileToDataUrl, Knob, Segmented } from './AquaControls.tsx'
+import type { createAquaRowStore } from './settings-store.ts'
+import css from './AquaAppearanceRow.module.css'
+
+/** Injected business face: every knob write except the master switch. */
+export interface AquaAppearanceRowInjected {
+  /** Set the rendering mode. */
+  setMode: (value: 'mica' | 'compat') => void
+  /** Set the glass blur radius, px. */
+  setBlur: (value: number) => void
+  /** Set the glass frost amount, 0-100. */
+  setFrost: (value: number) => void
+  /** Set the fluid hue shift, degrees. */
+  setFluidHue: (value: number) => void
+  /** Set the background brightness, 0-100 (0 = black, 50 = transparent, 100 = white). */
+  setBgBrightness: (value: number) => void
+  /** Set the backdrop source. */
+  setBackground: (value: 'fluid' | 'wallpaper') => void
+  /** Set the wallpaper image (a data URL). */
+  setWallpaper: (value: string) => void
+  /** Set the particle-whale flag. */
+  setWhale: (value: boolean) => void
+  /** Set the wallpaper blur radius, px. */
+  setWallpaperBlur: (value: number) => void
+  /** Set the wallpaper frost veil, 0-100. */
+  setWallpaperFrost: (value: number) => void
+}
+
+/** Full component props: runtime share + store share + locale seat + injected face. */
+export type AquaAppearanceRowComponentProps =
+  PropsRuntime<'settings.general.item'> & PropsStore<ReturnType<typeof createAquaRowStore>>
+  & PropsLocale<'settings.aqua'> & AquaAppearanceRowInjected
+
+/**
+ * Render the Aqua appearance row.
+ * @param props - composed slot props.
+ * @returns the General section row.
+ */
+export function AquaAppearanceRow(props: AquaAppearanceRowComponentProps) {
+  const {
+    t, setMode, setBlur, setFrost, setFluidHue, setBgBrightness,
+    setBackground, setWallpaper, setWhale, setWallpaperBlur, setWallpaperFrost, useStore,
+  } = props
+  const enabled = useStore(s => s.enabled)
+  const mode = useStore(s => s.mode)
+  const blur = useStore(s => s.blur)
+  const frost = useStore(s => s.frost)
+  const fluidHue = useStore(s => s.fluidHue)
+  const bgBrightness = useStore(s => s.bgBrightness)
+  const dark = useStore(s => s.dark)
+  const background = useStore(s => s.background)
+  const whale = useStore(s => s.whale)
+  const wallpaperBlur = useStore(s => s.wallpaperBlur)
+  const wallpaperFrost = useStore(s => s.wallpaperFrost)
+  const fileRef = useRef<HTMLInputElement | null>(null)
+
+  // The brightness knob only ever offers the half that makes sense for the
+  // resolved scheme: dark mode darkens (0-50), light mode brightens (50-100).
+  // The stored 0-100 value is clamped for display; writing always stays in
+  // the offered range, so a value picked in one scheme is inert in the other.
+  const bgMin = dark ? 0 : 50
+  const bgMax = dark ? 50 : 100
+  const bgDisplay = Math.min(bgMax, Math.max(bgMin, bgBrightness))
+
+  // Off = the Plugins master switch is off: leave no trace in General.
+  if (!enabled) return null
+
+  return (
+    <div className={css.group}>
+      <div className={css.controls}>
+        <div className={css.row}>
+          <span className={css.rowLabel}>{t('aqua.mode')}</span>
+          <Segmented
+            label={t('aqua.mode')}
+            value={mode}
+            options={[
+              { id: 'mica', label: t('aqua.modeMica') },
+              { id: 'compat', label: t('aqua.modeCompat') },
+            ]}
+            onSelect={setMode}
+          />
+        </div>
+        <div className={css.rowHint}>{t('aqua.modeHint')}</div>
+
+        <div className={css.row}>
+          <span className={css.rowLabel}>{t('aqua.whale')}</span>
+          <button
+            type="button"
+            className={whale ? css.toggleOn : css.toggle}
+            aria-pressed={whale}
+            onClick={() => { setWhale(!whale) }}
+          >
+            <span className={css.check}>
+              {whale && <IconCheckOutline16 />}
+            </span>
+            {whale ? t('aqua.enable') : t('aqua.disable')}
+          </button>
+        </div>
+        <div className={css.knobHint}>{t('aqua.whaleHint')}</div>
+
+        {mode === 'mica' && (
+          <>
+            <Knob label={t('aqua.blur')} value={blur} min={0} max={40} step={0.5} unit="px" onChange={setBlur} />
+            <Knob label={t('aqua.frost')} value={frost} min={0} max={100} step={1} unit="%" onChange={setFrost} />
+          </>
+        )}
+        <Knob label={t('aqua.fluidHue')} value={fluidHue} min={0} max={360} step={1} unit="°" onChange={setFluidHue} />
+        <Knob label={t('aqua.bgBrightness')} value={bgDisplay} min={bgMin} max={bgMax} step={1} unit="%" onChange={setBgBrightness} />
+        <div className={css.knobHint}>
+          {t(dark ? 'aqua.bgBrightnessHintDark' : 'aqua.bgBrightnessHintLight')}
+        </div>
+
+        <div className={css.row}>
+          <span className={css.rowLabel}>{t('aqua.background')}</span>
+          <Segmented
+            label={t('aqua.background')}
+            value={background}
+            options={[
+              { id: 'fluid', label: t('aqua.backgroundFluid') },
+              { id: 'wallpaper', label: t('aqua.backgroundWallpaper') },
+            ]}
+            onSelect={setBackground}
+          />
+        </div>
+
+        {background === 'wallpaper' && (
+          <>
+            <div className={css.row}>
+              <span className={css.rowLabel}>{t('aqua.wallpaper')}</span>
+              <div className={css.wallpaperPick}>
+                <input
+                  ref={fileRef}
+                  type="file"
+                  accept="image/*"
+                  className={css.fileInput}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file !== undefined) {
+                      void fileToDataUrl(file).then(setWallpaper)
+                    }
+                    e.target.value = ''
+                  }}
+                />
+                <button type="button" className={css.pickButton} onClick={() => { fileRef.current?.click() }}>
+                  {t('aqua.chooseWallpaper')}
+                </button>
+              </div>
+            </div>
+            <div className={css.knobHint}>{t('aqua.wallpaperHint')}</div>
+            <Knob label={t('aqua.wallpaperBlur')} value={wallpaperBlur} min={0} max={40} step={0.5} unit="px" onChange={setWallpaperBlur} />
+            <Knob label={t('aqua.wallpaperFrost')} value={wallpaperFrost} min={0} max={100} step={1} unit="%" onChange={setWallpaperFrost} />
+          </>
+        )}
+      </div>
+    </div>
+  )
+}

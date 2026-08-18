@@ -23,9 +23,9 @@
 1. 下载 `DSHarness‑Desktop‑TUP.zip`，完整解压到本地文件夹
 2. 运行 `DeepSeekHarness.exe` 启动客户端
 3. 在插件面板启用 `DSH‑Transparent‑UI‑Plugin`，开启透明UI主题
-4. 配置本地模型路径，加载模型后即可对话
+4. 配置模型api，加载后即可对话，工作
 
-> 模型权重需要自行下载准备，本程序不附带AI模型文件。
+> 模型api自行准备，本程序不附带AI模型api。
 
 ## 🚀 源码编译（自行构建）
 环境依赖：`Node.js 18+`

@@ -11,7 +11,7 @@
 - 🚫 无需另外安装node.js
 - ⚙️ 保留原版全部能力：对话、api管理、插件系统、参数配置
 - 📺 窗口支持缩放、最小化，适配透明UI渲染
-
+- 🛍️ 内置插件市场 DSH-Market
 ## 📦 下载发行版
 前往 [Releases](https://github.com/sHartet/DSH‑Desktop/releases) 下载：
 `DSHarness‑Desktop‑TUP.zip`

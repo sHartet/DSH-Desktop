@@ -2,7 +2,7 @@
 
 **DeepSeek Harness 便携式 Electron 桌面客户端** · Portable Electron desktop client for DeepSeek Harness
 
-脱离浏览器，以独立软件窗口运行 DeepSeek Harness，开箱即用、免安装 Node.js、内置 11 个精选插件。
+脱离浏览器，以独立软件窗口运行 DeepSeek Harness 0.1.1-rc.2，开箱即用、免安装 Node.js、内置 11 个精选插件。
 Runs DeepSeek Harness in a standalone desktop window — no browser, no Node.js installation, 11 curated plugins built in.
 
 > 最新版本 **v1.2.0** · 下载见 [Releases](https://github.com/sHartet/DSH-Desktop/releases)

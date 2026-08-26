@@ -44,18 +44,6 @@ Runs DeepSeek Harness in a standalone desktop window — no browser, no Node.js 
 
 > 仅支持 **Windows** 系统（x64）。
 
-## 🔄 Upgrade / 升级
-
-> ⚠️ **必须先删除旧文件夹，再解压新版，不能直接覆盖！**
-> 旧版 `dsh-home\profiles\node_modules` 目录结构不兼容，覆盖解压会导致启动报错
-> 「The web server did not start within 90 seconds」。
-
-1. （可选）备份个人数据：`dsh-home\.credentials.yaml`（API Key）、`dsh-home\settings.yaml`（设置）、`dsh-home\sessions\`（历史会话）
-2. **删除**整个旧文件夹
-3. 解压新版到同一位置
-4. （可选）把备份的 `.credentials.yaml`、`settings.yaml` 拷回新 `dsh-home\`，无需重新填 API Key
-5. 启动 `DeepSeekHarness.exe`；若异常，先删掉拷回的 `settings.yaml` 让其重新生成默认配置
-
 ## 🗂️ Directory Structure / 目录结构
 
 ```

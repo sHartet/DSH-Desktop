@@ -1,12 +1,13 @@
-# DeepSeek Harness Desktop - TUP
+# DSH-Desktop — DeepSeek Harness 桌面版
 
 **DeepSeek Harness 便携式 Electron 桌面客户端** · Portable Electron desktop client for DeepSeek Harness
 
-脱离浏览器，以独立软件窗口运行 DeepSeek Harness 0.1.1-rc.2，开箱即用、免安装 Node.js、内置 11 个精选插件。
-Runs DeepSeek Harness in a standalone desktop window — no browser, no Node.js installation, 11 curated plugins built in.
+脱离浏览器，以独立软件窗口运行 DeepSeek Harness，开箱即用、免安装 Node.js、内置 12 个精选插件。
+Runs DeepSeek Harness in a standalone desktop window — no browser, no Node.js installation, 12 curated plugins built in.
 
-> 最新版本 **v1.2.0** · 下载见 [Releases](https://github.com/sHartet/DSH-Desktop/releases)
+> 最新版本 **v1.2.1** · 下载见 [Releases](https://github.com/sHartet/DSH-Desktop/releases)
 
+<img width="1604" height="864" alt="Snipaste_2026-08-27_02-45-35" src="https://github.com/user-attachments/assets/5c1f4718-9075-4cc3-b632-d3d62b46824c" />
 ---
 
 ## ✨ Features / 特性
@@ -14,11 +15,11 @@ Runs DeepSeek Harness in a standalone desktop window — no browser, no Node.js 
 - 🪟 **独立软件窗口** — Electron 桌面外壳，不调用浏览器；关闭窗口即停止服务
 - 🚫 **免安装运行环境** — 内置 Node.js 运行时（`node-runtime/`），无需在系统安装 Node/npm
 - 📦 **便携目录** — 整个应用就是一个文件夹，拷走即用，不写注册表、不动系统环境
-- 🔌 **内置 11 个插件** — 插件市场 / 视觉路由 / 技能管理 / 附件 / Markdown 预览等，开箱即用
+- 🔌 **内置 12 个插件** — 插件市场 / 视觉路由 / 技能管理 / 附件 / Markdown 预览 / 备份管理，开箱即用
 - 🔒 **纯净无隐私** — 包内不含任何个人数据（API Key、会话、附件、设置），首次启动自动生成
 - 🌐 **端口自动选择** — 自动挑选空闲端口，多开或端口冲突不再报错；可用 `--port` 手动指定
 
-## 📦 Included Plugins / 内置插件（11 个）
+## 📦 Included Plugins / 内置插件（12 个）
 
 | 插件 | 说明 |
 | --- | --- |
@@ -33,6 +34,7 @@ Runs DeepSeek Harness in a standalone desktop window — no browser, no Node.js 
 | **dsh-markdown-preview** | 会话内 Markdown / 图片 / 文本文件预览 |
 | **dsh-whale-musume** | 鲸鱼娘看板娘吉祥物 |
 | **dsh-message-outline** | 消息大纲侧边栏：hover 展开大纲，点击定位消息 |
+| **dsh-backup-manager** | 备份管理：一键备份 / 恢复整个用户目录，支持自定义备份目录、定时自动备份 |
 
 ## ⬇️ Download & Install / 下载与安装
 
@@ -42,6 +44,18 @@ Runs DeepSeek Harness in a standalone desktop window — no browser, no Node.js 
 4. 进入「设置」填写你自己的 **API Key**，开始使用
 
 > 仅支持 **Windows** 系统（x64）。
+
+## 🔄 Upgrade / 升级
+
+> ⚠️ **必须先删除旧文件夹，再解压新版，不能直接覆盖！**
+> 旧版 `dsh-home\profiles\node_modules` 目录结构不兼容，覆盖解压会导致启动报错
+> 「The web server did not start within 90 seconds」。
+
+1. （可选）备份个人数据：`dsh-home\.credentials.yaml`（API Key）、`dsh-home\settings.yaml`（设置）、`dsh-home\sessions\`（历史会话）
+2. **删除**整个旧文件夹
+3. 解压新版到同一位置
+4. （可选）把备份的 `.credentials.yaml`、`settings.yaml` 拷回新 `dsh-home\`，无需重新填 API Key
+5. 启动 `DeepSeekHarness.exe`；若异常，先删掉拷回的 `settings.yaml` 让其重新生成默认配置
 
 ## 🗂️ Directory Structure / 目录结构
 
@@ -79,3 +93,9 @@ A: 拷贝 `dsh-home\.credentials.yaml` 到新机器的 `dsh-home\` 下即可。
 - 本项目是基于 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的桌面封装（MIT License），仅供学习交流
 - 请自行申请并妥善保管 API Key；本项目不收集、不存储任何账号信息
 - 使用过程中产生的 API 费用由使用者自行承担
+
+---
+
+## 📝 License / 许可
+
+MIT License — 详见仓库 `LICENSE` 文件。

@@ -1,4 +1,4 @@
-# DSH-Desktop — DeepSeek Harness 桌面版
+# DeepSeek Harness 桌面版
 
 **DeepSeek Harness 便携式 Electron 桌面客户端** · Portable Electron desktop client for DeepSeek Harness
 

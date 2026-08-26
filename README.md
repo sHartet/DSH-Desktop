@@ -8,7 +8,6 @@ Runs DeepSeek Harness in a standalone desktop window — no browser, no Node.js 
 > 最新版本 **v1.2.1** · 下载见 [Releases](https://github.com/sHartet/DSH-Desktop/releases)
 
 <img width="1604" height="864" alt="Snipaste_2026-08-27_02-45-35" src="https://github.com/user-attachments/assets/5c1f4718-9075-4cc3-b632-d3d62b46824c" />
----
 
 ## ✨ Features / 特性
 
@@ -96,6 +95,3 @@ A: 拷贝 `dsh-home\.credentials.yaml` 到新机器的 `dsh-home\` 下即可。
 
 ---
 
-## 📝 License / 许可
-
-MIT License — 详见仓库 `LICENSE` 文件。
